@@ -15,5 +15,18 @@ jobs:
     steps:
     - name: Checkout the code from the repository.
       uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --tag sarathjeeva/container-php-image
+
+    -name: Configure AWS credentials
+      uses: aws-action/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{secret.AWS_ACCESS_KEY_ID}}
+        aws-secret-access-key: ${{secret.AWS_SECET_ACCESS_KEY}}
+        aws-region: us-east-
+    -name: Login to ECR
+      run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/c2z4o9m0
+  
+    - name: Build , tag and push the Docker image
+      run: |
+      docker build . -t container-php-image
+      docker tag container-php-image:latest public.ecr.aws/c2z4o9m0/container-php-image:latest
+      docker push public.ecr.aws/c2z4o9m0/container-php-image:latest
