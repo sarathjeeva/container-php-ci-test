@@ -16,4 +16,4 @@ jobs:
     - name: Checkout the code from the repository.
       uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --tag sarathjeeva/container-php-image:$(date +%s)
+      run: docker build . --tag sarathjeeva/container-php-image
